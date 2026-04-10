@@ -13,13 +13,14 @@
   <link rel="apple-touch-icon" href="./icons/icon-192.svg" />
   <title>Eggchi Pocket Pet</title>
   <style>
-    /* --- 修正のコア部分：背景をhtmlに固定し、bodyの余計なレイヤーを削除 --- */
     :root{--bg1:#fff6b8;--bg2:#ffb9d6;--ink:#5d3b75;--panel:rgba(255,255,255,.8);--panel-strong:rgba(255,255,255,.9);--chip-bg:rgba(255,255,255,.82);--meter-bg:rgba(255,255,255,.68);--shadow:0 12px 28px rgba(122,44,107,.18);--app-background:radial-gradient(circle at top left,rgba(255,255,255,.8) 0 12%,transparent 13%),radial-gradient(circle at 80% 14%,rgba(255,255,255,.5) 0 10%,transparent 11%),linear-gradient(180deg,var(--bg1),var(--bg2))}
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-    html{margin:0;padding:0;width:100%;height:100%;background:var(--bg2);background-image:var(--app-background);background-attachment:fixed;background-size:cover;overflow:hidden}
-    body{margin:0;padding:0;width:100%;height:100dvh;height:-webkit-fill-available;font-family:"Trebuchet MS","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;color:var(--ink);background:transparent;overflow:hidden;transition:color .4s ease}
-    .app{width:min(100%,430px);height:100%;margin:0 auto;padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);display:grid;grid-template-rows:auto auto 1fr auto auto;gap:clamp(4px,1.5vh,12px);box-sizing:border-box;overflow:hidden}
-    /* --- ここから下は元の装飾とロジックを維持 --- */
+    html{margin:0;padding:0;width:100%;height:100%;background:var(--app-background);overflow:hidden}
+    body{position:fixed;inset:0;margin:0;padding:0;width:100%;height:100dvh;min-height:100dvh;max-height:100dvh;height:-webkit-fill-available;min-height:-webkit-fill-available;font-family:"Trebuchet MS","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;color:var(--ink);background:transparent;overflow:hidden;transition:color .4s ease}
+    body::before,body::after{content:"";position:fixed;left:0;right:0;pointer-events:none;background:var(--app-background);z-index:0}
+    body::before{top:0;bottom:0}
+    body::after{bottom:-1px;height:calc(env(safe-area-inset-bottom) + 44px)}
+    .app{position:relative;z-index:1;width:min(100%,430px);height:100dvh;min-height:100dvh;max-height:100dvh;height:-webkit-fill-available;min-height:-webkit-fill-available;max-height:-webkit-fill-available;margin:0 auto;padding:max(8px,env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom));display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:clamp(4px,1.5vh,12px);box-sizing:border-box;overflow:hidden}
     .hud,.message,.selector,.controls{background:var(--panel);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.45);box-shadow:var(--shadow);border-radius:20px}
     .hud{padding:10px 12px}.hud-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.title{margin:0;font-size:1.2rem;color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.15)}.top-actions{display:flex;align-items:center;gap:8px}.stage{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 10px;border-radius:999px;background:var(--chip-bg);font-size:.76rem;font-weight:800;text-align:center;color:var(--ink)}
     .mini-icon{border:none;border-radius:999px;background:var(--chip-bg);color:var(--ink);padding:7px 10px;font:inherit;font-size:.74rem;font-weight:800;box-shadow:0 8px 16px rgba(94,48,105,.12);touch-action:manipulation}
